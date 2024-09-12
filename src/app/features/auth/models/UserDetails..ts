@@ -1,15 +1,6 @@
 export interface UserDetails {
   id: number;
-  firstName: string;
-  lastName: string;
+  nickName: string;
   email: string;
   phoneNumber: string;
-  profilePhotoUrl: string;
-  firstAddress: string;
-  secondAddressLine: string;
-  country: string;
-  province: string;
-  city: string;
-  postalCode: string;
-  role: string;
 }

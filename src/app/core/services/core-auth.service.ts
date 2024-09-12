@@ -5,6 +5,7 @@ import { DOCUMENT } from '@angular/common';
 import { AccessTokenPayload } from '../models/access-token-payload.';
 import { LoggedUser } from '../models/logged-user';
 import { RegisteredUser } from '../models/registered-user';
+import e from 'express';
 
 @Injectable({
   providedIn: 'root',
@@ -66,27 +67,21 @@ export class CoreAuthService {
   }
 
   public get isAuthenticated(): boolean {
-    if (!this.token) return false;
-
-    if (this.isTokenExpired()) {
-      this.logoutHandler();
-      return false;
-    }
-
-    return true;
+    return !!this.token && !this.isTokenExpired();
   }
 
-  // Role-based authorization was taken out of the project
-  public isAuthorized(roles: string[]): boolean {
+  public get isAdministrator(): boolean {
     if (!this.isAuthenticated) return false;
 
     const tokenRole = this.payload?.role;
-    //&& roles.includes(tokenRole) Admin ve User rolleri için
-    if (tokenRole) {
+    if (tokenRole?.includes('Admin')) {
       return true;
     }
-
     return false;
+  }
+
+  public isAuthorized(roles: string[]): boolean {
+    return this.isAuthenticated && roles.some(role => this.payload?.role?.includes(role));
   }
 
   public loginHandler(loggedUser: LoggedUser): void {
@@ -104,8 +99,8 @@ export class CoreAuthService {
   }
 
   public registerHandler(registeredUser: RegisteredUser): void {
-    this.token = registeredUser.access_token;
-    this.expirationDate = registeredUser.expiration_date;
+    this.token = registeredUser.token;
+    this.expirationDate = registeredUser.expirationDate;
     this._registered.next();
     this._isRegistered.next(true);
   }

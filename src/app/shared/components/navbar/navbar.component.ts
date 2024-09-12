@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit }
 import { UserDetails } from '../../../features/auth/models/UserDetails.';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { UserService } from '../../../features/auth/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,9 +16,8 @@ export class NavbarComponent implements OnInit {
   isLogged: boolean = false;
   
   constructor(
-    private router: Router,
     @Inject(AuthService) private authService: AuthService,
-    //@Inject(UserService) private userService: UserService,
+    @Inject(UserService) private userService: UserService,
     private change: ChangeDetectorRef
   ) { }
 
@@ -26,9 +26,19 @@ export class NavbarComponent implements OnInit {
       this.isLogged = isLogged;
       if (isLogged) {
         console.log('User is logged in');
-        this.change.markForCheck();
-        //this.setUserDetails(); TODO: UserService method to get user details
+        this.setUserDetails();
       }
     });
+  }
+
+  private setUserDetails(): void {
+    const userId = this.authService.tokenPayload?.nameid ?? '';
+    if (userId) {
+      this.userService.getUserDetailsById(userId).subscribe((userDetails) => {
+        this.userDetails = userDetails;
+        //console.log('User details:', this.userDetails);
+        this.change.markForCheck(); // Signal change detection
+      });
+    }
   }
  }

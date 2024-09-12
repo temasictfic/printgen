@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 export class DropdownProfileComponent {
   @Input()
   userDetails!: UserDetails;
+  isAdmin: boolean = false;
 
   constructor(
     @Inject(AuthService) private authService: AuthService,
@@ -32,6 +33,7 @@ export class DropdownProfileComponent {
     this.flowbiteService.loadFlowbite((flowbite) => {
       flowbite.initDropdowns();
     });
+    this.isAdmin = this.authService.isAdministrator;
   }
 // TODO: logout endpointi yok!!!
   onLogoutClick(): void {

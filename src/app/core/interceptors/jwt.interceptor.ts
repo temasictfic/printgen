@@ -1,31 +1,28 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHandlerFn } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHandlerFn, HttpInterceptorFn } from '@angular/common/http';
 
 import { inject } from '@angular/core';
-import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
-export function jwtInterceptor(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.token;
 
   if (req.url.includes('auth') && !req.url.endsWith('logout')){
     // Don't add the Authorization header
-    return next.handle(req);
+    return next(req);
   }
 
   if (token) {
-    //console.log('Adding token to request');
+    // Clone the request and add the Authorization header
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`
       }
     });
   }
-  return next.handle(req);
+
+  // Pass the request to the next handler
+  return next(req);
 };
 
-export class JwtInterceptor implements HttpInterceptor {
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return jwtInterceptor(req, next);
-  }
-}
