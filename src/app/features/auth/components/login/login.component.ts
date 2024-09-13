@@ -13,8 +13,7 @@ console.log('LoginComponent');
   styleUrl: './login.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent { 
-  now = new Date();
+export class LoginComponent {
   loginFormGroup: FormGroup;
 
   constructor(
@@ -51,4 +50,3 @@ export class LoginComponent {
     this.login();
   }
 }
-

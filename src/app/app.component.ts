@@ -5,6 +5,7 @@ import { FlowbiteService } from './core/services/flowbite.service';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,

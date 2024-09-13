@@ -8,6 +8,8 @@ export const authorizeGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authErrorRedirectUrl = inject(AUTH_ERROR_REDIRECT_URL_TOKEN);
 
+  // Check if the user is trying to access login or register routes
+
   if (!authService.isAuthenticated) {
     router.navigateByUrl(authErrorRedirectUrl);
     return false;

@@ -13,7 +13,7 @@ import { UserService } from '../../../features/auth/services/user.service';
 })
 export class NavbarComponent implements OnInit {
   userDetails: UserDetails = {} as UserDetails;
-  isLogged: boolean = false;
+  isEntered: boolean = false;
   
   constructor(
     @Inject(AuthService) private authService: AuthService,
@@ -22,9 +22,11 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.isLogged.subscribe((isLogged) => {
-      this.isLogged = isLogged;
-      if (isLogged) {
+    this.authService.isAuthenticated.subscribe((isAuthenticated) => {
+      console.log('Is authenticated:', isAuthenticated);
+      console.log('isEntered:', this.isEntered);
+      this.isEntered = isAuthenticated;
+      if (this.isEntered) {
         console.log('User is logged in');
         this.setUserDetails();
       }
@@ -32,7 +34,8 @@ export class NavbarComponent implements OnInit {
   }
 
   private setUserDetails(): void {
-    const userId = this.authService.tokenPayload?.nameid ?? '';
+    const userId = this.authService.tokenPayload?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] ?? '';
+    console.log('User ID:', userId);
     if (userId) {
       this.userService.getUserDetailsById(userId).subscribe((userDetails) => {
         this.userDetails = userDetails;

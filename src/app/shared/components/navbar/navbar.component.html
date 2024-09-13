@@ -5,12 +5,12 @@
           <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PrintGen</span>
         </a>
       <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"> 
-          @if (isLogged && userDetails) {
+          @if (isEntered && userDetails) {
             <app-dropdown-profile [userDetails]="userDetails"></app-dropdown-profile>
           }
           @else
           {
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2" >
               <div class="sm:flex sm:gap-4">
                 <app-button-auth text="Login" routerLink="/auth/login"></app-button-auth>
               </div>

@@ -1,7 +1,12 @@
-export interface CoreAuth { }
-import { Inject, Injectable } from '@angular/core';
+export interface CoreAuth {}
+import {
+  afterNextRender,
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+} from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { AccessTokenPayload } from '../models/access-token-payload.';
 import { LoggedUser } from '../models/logged-user';
 import { RegisteredUser } from '../models/registered-user';
@@ -11,42 +16,31 @@ import e from 'express';
   providedIn: 'root',
 })
 export class CoreAuthService {
-
-  // Subject: TS tarafında bir Observable'dır. Bu nedenle Subject sınıfı, Observable sınıfının bir alt sınıfıdır. Subject'e subscribe olan dinleyiciler sonraki çağrıları -next, error, complete- yakalabilirler ve eğer bir değer de geçiliyorsa next çağrısından sonra bu değeri alabilirler.
-  protected readonly _logged = new Subject<void>();
-
-  public get logged(): Observable<void> {
-    return this._logged.asObservable();
-  }
+  private _localStorage: Storage | undefined;
+  private _token: string | null = null;
+  private _expirationDate: number | null = null;
+  private _isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   // BehaviorSubject: Subject sınıfının bir alt sınıfıdır. BehaviorSubject, bir başlangıç değeri alır ve bu değeri subscribe olan dinleyicilere hemen iletir. Daha sonra yeni değerler geldiğinde bu değerleri dinleyicilere iletir.
-  protected readonly _isLogged = new BehaviorSubject<boolean>(
-    this.isAuthenticated
-  );
-  public get isLogged(): Observable<boolean> {
-    return this._isLogged.asObservable();
-  }
 
-  protected readonly _registered = new Subject<void>();
-  public get registered(): Observable<void> {
-    return this._registered.asObservable();
-  }
-
-  protected readonly _isRegistered = new BehaviorSubject<boolean>(
-    this.isAuthenticated
-  );
-
-  public get isRegistered(): Observable<boolean> {
-    return this._isRegistered.asObservable();
+  public get isAuthenticated(): Observable<boolean> {
+    return this._isAuthenticated.asObservable();
   }
 
 
-  constructor(@Inject(DOCUMENT) protected document: Document) {}
-
+  constructor(@Inject(DOCUMENT) protected document: Document) {
+    afterNextRender(() => {
+      this._localStorage =
+        this.document?.defaultView?.localStorage || window.localStorage;
+      this._token = this._localStorage?.getItem('access_token') ?? null;
+      if (this._token) this._isAuthenticated.next(true);
+      this._expirationDate = Number(this._localStorage?.getItem('expiration_date')) ?? null;
+      console.log('Token:', this.isAuthenticated);
+    });
+  }
 
   protected get localStorage(): Storage | undefined {
-
-    return this.document?.defaultView?.localStorage;
+    return this._localStorage;
   }
 
   public get tokenPayload(): AccessTokenPayload | null {
@@ -54,10 +48,10 @@ export class CoreAuthService {
 
     const encodedPayload = this.token.split('.')[1];
     const decodedPayload = atob(encodedPayload);
-    const payload = JSON.parse(decodedPayload) as AccessTokenPayload;
+    const retrievePayload = JSON.parse(decodedPayload) as AccessTokenPayload;
 
-    this.payload = payload;
-    return payload;
+    //this.payload = retrievePayload;
+    return retrievePayload;
   }
 
   isTokenExpired(): boolean {
@@ -66,14 +60,14 @@ export class CoreAuthService {
     return new Date() > new Date(this.expirationDate);
   }
 
-  public get isAuthenticated(): boolean {
-    return !!this.token && !this.isTokenExpired();
-  }
 
   public get isAdministrator(): boolean {
     if (!this.isAuthenticated) return false;
 
-    const tokenRole = this.payload?.role;
+    const tokenRole =
+      this.tokenPayload?.[
+        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+      ];
     if (tokenRole?.includes('Admin')) {
       return true;
     }
@@ -81,53 +75,67 @@ export class CoreAuthService {
   }
 
   public isAuthorized(roles: string[]): boolean {
-    return this.isAuthenticated && roles.some(role => this.payload?.role?.includes(role));
+    return (
+      this.isAuthenticated &&
+      roles.some((role) =>
+        this.tokenPayload?.[
+          'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+        ]?.includes(role)
+      )
+    );
   }
 
   public loginHandler(loggedUser: LoggedUser): void {
     this.token = loggedUser.token;
     this.expirationDate = loggedUser.expirationDate;
-    this._logged.next();
-    this._isLogged.next(true);
+    this._isAuthenticated.next(true);
   }
 
   public logoutHandler(): void {
     this.localStorage?.removeItem('access_token');
     this.localStorage?.removeItem('expiration_date');
-    this._logged.next();
-    this._isLogged.next(false);
+    this._isAuthenticated.next(false);
   }
 
   public registerHandler(registeredUser: RegisteredUser): void {
     this.token = registeredUser.token;
     this.expirationDate = registeredUser.expirationDate;
-    this._registered.next();
-    this._isRegistered.next(true);
   }
 
   public get token(): string | null {
-    return this.localStorage?.getItem('access_token') ?? null;
+    return this._token;
   }
 
-  protected set token(token: string) {
-    this.localStorage?.setItem('access_token', token);
+  protected set token(token: string | null) {
+    if (token) {
+      this._localStorage?.setItem('access_token', token);
+    } else {
+      this._localStorage?.removeItem('access_token');
+    }
+    this._token = token;
   }
 
   public get expirationDate(): number | null {
-    return Number(this.localStorage?.getItem('expiration_date')) ?? null;
+    return this._expirationDate;
   }
 
   protected set expirationDate(date: number) {
-    this.localStorage?.setItem('expiration_date', String(date));
+    if (date) {
+      this._localStorage?.setItem('expiration_date', date.toString());
+    } else {
+      this._localStorage?.removeItem('expiration_date');
+    }
+    this._expirationDate = date;
   }
 
+  /*   private _payload: AccessTokenPayload | null = null;
   public get payload(): AccessTokenPayload | null {
-    return this.payload;
+    return this._payload;
   }
 
-  protected set payload(payload: AccessTokenPayload | null) {
-    this.payload = payload;
-  }
+  protected set payload(value: AccessTokenPayload | null) {
+    this._payload = value;
+  } */
 
   // refresh_token renewal made by backend
   public get refreshToken(): string | null {
@@ -145,6 +153,4 @@ export class CoreAuthService {
     }
     return null;
   }
-
-
 }

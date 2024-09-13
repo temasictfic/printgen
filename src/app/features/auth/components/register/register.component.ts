@@ -21,7 +21,9 @@ export class RegisterComponent {
 //public dialog: MatDialog,
 constructor(private formBuilder: FormBuilder, private router: Router, @Inject(AuthService)private authService: AuthService) {
   this.registerFormGroup = this.formBuilder.group({
-    nickName: ['', [Validators.required]],
+    firstName: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
+    userName: ['', [Validators.required]],
     email: ['', [Validators.required]],
     phoneNumber: ['', [Validators.required]],
     password: ['', [Validators.required]],
@@ -40,7 +42,9 @@ openPrivacyPolicy() {
 
 register() {
   const registerCredentials: RegisterCredentials = {
-    nickName: this.registerFormGroup.value.nickName,
+    firstName: this.registerFormGroup.value.firstName,
+    lastName: this.registerFormGroup.value.lastName,
+    userName: this.registerFormGroup.value.userName,
     phoneNumber: this.registerFormGroup.value.phoneNumber,
     email: this.registerFormGroup.value.email,
     password: this.registerFormGroup.value.password,

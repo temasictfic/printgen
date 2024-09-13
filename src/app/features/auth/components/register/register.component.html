@@ -38,16 +38,44 @@
   
           <form [formGroup]="registerFormGroup" (submit)="onRegisterFormSubmit()" class="mt-8 grid grid-cols-6 gap-6">
             <div class="col-span-6 sm:col-span-3">
-              <label for="NickName" class="block text-sm font-medium text-gray-700">
-                Nickname
+              <label for="FirstName" class="block text-sm font-medium text-gray-700">
+                Firstname
               </label>
   
               <input
                 type="text"
-                formControlName="nickName"
-                id="NickName"
-                name="nick_name"
-                autocomplete="nick_name"
+                formControlName="firstName"
+                id="FirstName"
+                name="first_name"
+                autocomplete="first_name"
+                class="mt-1 h-8 pl-2 w-full rounded-md border-gray-200 border-2 text-sm text-gray-700 shadow-sm"
+              />
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <label for="LastName" class="block text-sm font-medium text-gray-700">
+                Lastname
+              </label>
+  
+              <input
+                type="text"
+                formControlName="lastName"
+                id="LastName"
+                name="last_name"
+                autocomplete="last_name"
+                class="mt-1 h-8 pl-2 w-full rounded-md border-gray-200 border-2 text-sm text-gray-700 shadow-sm"
+              />
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+              <label for="UserName" class="block text-sm font-medium text-gray-700">
+                Username
+              </label>
+  
+              <input
+                type="text"
+                formControlName="userName"
+                id="UserName"
+                name="user_name"
+                autocomplete="user_name"
                 class="mt-1 h-8 pl-2 w-full rounded-md border-gray-200 border-2 text-sm text-gray-700 shadow-sm"
               />
             </div>

@@ -9,7 +9,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class UserService {
 
-  private apiControllerUrl = `${environment.apiUrl}/api/users`;
+  private apiControllerUrl = `${environment.apiUrl}/api/user`;
   private _userDetails = new Subject<UserDetails>();
 
   constructor(private http: HttpClient) { }
