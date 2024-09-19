@@ -19,6 +19,11 @@ export const routes: Routes = [
           import('./features/auth/auth.module').then((m) => m.AuthModule),
         canActivate: [redirectHomeIfLoggedGuard],
       },
+      {
+        path: 'design',
+        loadChildren: () =>
+          import('./features/design/design.module').then((m) => m.DesignModule),
+      }
     ],
   },
 ];

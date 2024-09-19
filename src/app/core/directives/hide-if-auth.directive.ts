@@ -10,12 +10,9 @@ export class HideIfAuthDirective implements OnInit {
   constructor(private el: ElementRef, private authService: AuthService) {}
 
   ngOnInit() {
-      if (this.authService.isAuthenticated) {
-        // Hide the element if the user is authenticated
-        this.el.nativeElement.style.display = 'none';
-      } else {
-        // Show the element if the user is not authenticated
-        this.el.nativeElement.style.display = '';
-      }
+    this.authService.isAuthenticated.subscribe((isAuthenticated) => {
+      this.el.nativeElement.style.display = isAuthenticated ? '' : '';
+    });
   }
 }
+// TODO: This gives an error bcs server side rendering so i implemented inside navbar

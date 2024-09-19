@@ -35,12 +35,13 @@ export class AuthService extends CoreAuthService {
       );
   }
 
-  logout(): Observable<void> {
-    return this.http.post<void>(`${this.apiControllerUrl}/logout`, {}).pipe(
+  logout() {
+/*     return this.http.post<void>(`${this.apiControllerUrl}/logout`, {}).pipe(
       tap(() => {
         super.logoutHandler();
       })
-    );
+    ); */
+    super.logoutHandler();
   }
 
   register(

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
-import { BestSellerService } from '../../../features/design/services/best-seller.service';
+import { BestSellerService } from '../../../features/home/services/best-seller.service';
 
 @Component({
   selector: 'app-filter',

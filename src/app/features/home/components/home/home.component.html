@@ -1,16 +1,41 @@
-<div class="relative mx-auto max-w-screen-full px-24 py-20 sm:px-32 lg:flex lg:h-auto lg:justify-items-start lg:px-36">
-  <div class="container w-full grid grid-cols-2 gap-10 md:grid-cols-2">
-    <div class="w-1/5">
-<!--       <app-filter></app-filter>
- -->    </div>
-    <div class="w-4/5 max-w-3xl">
-      <div class="">
-<!--         <app-hotel-list></app-hotel-list>
--->      <h1>Naber</h1>
-      </div>
-      <div class="py-8">
-<!--         <app-pagination></app-pagination> -->
-      </div>
+<!-- <div
+  class="relative px-36"
+>
+  <div class="grid grid-cols-2 w-full">
+    <div class="lg:w-1/3 py-20">
+      <app-filter></app-filter>
+    </div>
+    <div class="flex lg:w-full">
+      <app-best-seller-detail></app-best-seller-detail>
+    </div>
+  </div>
+</div> -->
+
+<div class="container mx-auto px-24 py-8">
+  <div class="flex flex-col md:flex-row gap-12">
+    <!-- Filter Section -->
+    <div class="w-full md:w-1/5 py-20">
+      <app-filter></app-filter>
+    </div>
+
+    <!-- Category and Gallery Section -->
+    <div class="w-full md:w-4/5">
+      <app-best-seller-detail></app-best-seller-detail>
     </div>
   </div>
 </div>
+
+<!-- <div class="container w-full grid">
+  <div class="w-1/3">
+    <app-filter></app-filter>
+  </div>
+  <div class="">
+    <div class="">
+<app-best-seller-list></app-best-seller-list>
+      <app-best-seller-detail></app-best-seller-detail>
+    </div>
+    <div class="py-8">
+      <app-pagination></app-pagination>
+    </div>
+  </div>
+</div> -->

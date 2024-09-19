@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { SharedModule } from "../../../../shared/shared.module";
 
 @Component({
-  selector: 'app-best-seller-detail',
+  selector: 'app-design',
   standalone: true,
   imports: [
     CommonModule,
-  ],
-  templateUrl: './best-seller-detail.component.html',
-  styleUrl: './best-seller-detail.component.css',
+    SharedModule
+],
+  templateUrl: './design.component2.html',
+  styleUrl: './design.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BestSellerDetailComponent { }
+export class DesignComponent { }

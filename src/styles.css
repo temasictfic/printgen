@@ -2,3 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-image: 'assets/shades-of-purple-in-the-blur-51487-2880x1800.jpg';
+}

@@ -4,6 +4,7 @@ import { Card } from '../../../../shared/models/card.';
 import { BestSellerService } from '../../services/best-seller.service';
 
 
+
 @Component({
   selector: 'app-best-seller-list',
   templateUrl: './best-seller-list.component.html',
@@ -18,7 +19,7 @@ export class BestSellerListComponent {
   constructor(private bestSellerService: BestSellerService) {}
 
   ngOnInit() {
-    this.loadMoreCards();
+    //this.loadMoreCards();
   }
 
   onScroll() {

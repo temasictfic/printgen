@@ -10,6 +10,8 @@ import { FlowbiteService } from '../core/services/flowbite.service';
 import { CardComponent } from './components/card/card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterComponent } from './components/filter/filter.component';
+import { HideIfAuthDirective } from '../core/directives/hide-if-auth.directive';
+import { DrawerComponent } from './components/drawer/drawer.component';
 
 @NgModule({
   declarations: [
@@ -19,9 +21,10 @@ import { FilterComponent } from './components/filter/filter.component';
     ButtonAuthComponent,
     DropdownProfileComponent,
     CardComponent,
-    FilterComponent
+    FilterComponent,
+    DrawerComponent,
   ],
   imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
-  exports: [CardComponent],
+  exports: [CardComponent, FilterComponent, DrawerComponent],
 })
 export class SharedModule {}

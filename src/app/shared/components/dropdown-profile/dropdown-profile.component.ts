@@ -37,12 +37,10 @@ export class DropdownProfileComponent {
   }
 // TODO: logout endpointi yok!!!
   onLogoutClick(): void {
-    this.authService.logout().subscribe({
-      complete: () => {
-        console.log('Logout successful');
-        this.change.markForCheck();
-        this.router.navigate(['/']);
-      },
-    });
+    this.authService.logout();
+    console.log('Logout successful');
+    this.change.markForCheck();
+    this.router.navigate(['/']);
+
   }
 }

@@ -19,10 +19,9 @@ export class UserService {
   }
 
   getUserDetailsById(id: string): Observable<UserDetails> {
-      const params = new HttpParams().set('id', id); // Use HttpParams to add query parameters
-      return this.http.get<UserDetails>(`${this.apiControllerUrl}`, {
-        params: params // Attach the id as a query parameter
-      }).pipe(
+      //const params = new HttpParams().set('id', id); // Use HttpParams to add query parameters
+      return this.http.get<UserDetails>(`${this.apiControllerUrl}/` + id
+      ).pipe(
         tap((userDetails) => {
           this._userDetails.next(userDetails);
         })
