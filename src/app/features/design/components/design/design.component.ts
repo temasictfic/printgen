@@ -4,12 +4,7 @@ import { SharedModule } from "../../../../shared/shared.module";
 
 @Component({
   selector: 'app-design',
-  standalone: true,
-  imports: [
-    CommonModule,
-    SharedModule
-],
-  templateUrl: './design.component2.html',
+  templateUrl: './design.component4.html',
   styleUrl: './design.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

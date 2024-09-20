@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { DesignComponent } from './components/design/design.component';
 import { RouterModule, Routes } from '@angular/router';
+import { TShirtComponent } from './components/t-shirt/t-shirt.component';
 
 const routes: Routes = [
   {
@@ -11,9 +12,8 @@ const routes: Routes = [
   },
 ];
 
-
 @NgModule({
-  declarations: [],
+  declarations: [TShirtComponent, DesignComponent],
   imports: [
     CommonModule,
     SharedModule,
