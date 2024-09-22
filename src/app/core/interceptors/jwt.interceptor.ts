@@ -8,7 +8,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.token;
 
-  if (req.url.includes('auth') && !req.url.endsWith('logout')){
+  if (req.url.includes('auth') && req.url.includes('catalogproduct') && !req.url.endsWith('logout')){
     // Don't add the Authorization header
     return next(req);
   }

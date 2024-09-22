@@ -1,0 +1,11 @@
+<div class="grid grid-cols-3 gap-2 mb-4">
+    @for (size_volume of sizes_volumes; track $index) {
+        <app-button type="button" class="btn btn-outline fixed-size-btn" (clickHandler)="onSizeVolumeClick(size_volume)">{{size_volume}}</app-button>    
+    }
+</div>
+<!-- <button type="button" class="btn btn-outline">S</button>
+<button type="button" class="btn btn-outline">M</button>
+<button type="button" class="btn btn-outline">L</button>
+<button type="button" class="btn btn-outline">XL</button>
+<button type="button" class="btn btn-outline">2XL</button>
+<button type="button" class="btn btn-outline">3XL</button> -->

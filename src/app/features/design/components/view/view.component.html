@@ -1,0 +1,13 @@
+<div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+    <div class="flex flex-wrap gap-2">
+        @for (view of views; track $index) {
+            @for (item of view; track $index) {
+                <app-button type="button" class="btn btn-outline">{{item}}</app-button>
+            }
+        }
+    </div>
+    <div class="flex gap-2">
+        <app-button type="button" class="btn btn-outline">Undo</app-button>
+        <app-button type="button" class="btn btn-outline">Redo</app-button>
+    </div>
+</div>

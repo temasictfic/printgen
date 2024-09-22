@@ -1,0 +1,10 @@
+<div class="grid grid-cols-3 gap-2 mb-4">
+    @for (style of styles; track $index) {
+        <div class="text-center">
+            <app-button type="button" class="btn" (clickHandler)="onStyleClick(style)">
+                <img src="assets/genre1.png" alt="Style {{$index + 1}}" class="max-w-24 rounded-md mb-1">
+            </app-button>
+            <p class="text-xs">Style {{$index + 1}}</p>
+        </div>
+    } <!-- TODO: Change hardcode src with style src-->
+</div>
