@@ -8,7 +8,7 @@ import { SizeVolumeComponent } from './components/size-volume/size-volume.compon
 import { ColorComponent } from './components/color/color.component';
 import { StyleComponent } from './components/style/style.component';
 import { ButtonComponent } from './components/shared/button/button.component';
-import { ViewComponent } from './components/view/view.component';
+import { PlacementComponent } from './components/placement/placement.component';
 import { PromptComponent } from './components/prompt/prompt.component';
 import { ProductAreaComponent } from './components/product-area/product-area.component';
 import { TechniqueComponent } from './components/technique/technique.component';
@@ -30,7 +30,7 @@ const routes: Routes = [
     SizeVolumeComponent,
     ColorComponent,
     StyleComponent,
-    ViewComponent,
+    PlacementComponent,
     PromptComponent,
     ButtonComponent,
   ],

@@ -1,7 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 
 import { ProductService } from '../../services/product.service';
-import { After } from 'v8';
+import { Placement, Product } from '../../models/product.';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-design',
@@ -10,39 +11,39 @@ import { After } from 'v8';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DesignComponent implements OnInit, AfterViewInit {
-  colors!: string[];
-  sizes_volumes!: string[];
-  styles!: string[];
+  product!: Product;
+  selectedTechnique!: string;
   techniques!: string[];
-  views!: Map<string, string[]>;
+  selectedPlacement!: string;
+  placements: string[] = [];
+  selectedColor!: string; 
+  colors!: string[];
+  selectedSizeVolume!: string;
+  sizes_volumes!: string[];
+  selectedStyle: string = 'style1';
+  styles!: string[];
 
   constructor(@Inject(ProductService) private productService: ProductService, private change: ChangeDetectorRef) {
 
     this.styles = ['style1', 'style2', 'style3', 'style4', 'style5', 'style6'];
-    /*     this.colors = ['red', 'green', 'blue', 'yellow', 'black', 'white', 'orange'];
-    this.sizes_volumes = ['S', 'M', 'L', 'XL', '2XL', '3XL'];
-    this.views = ['Front', 'Back', 'Left', 'Right']; */
   }
+
   ngOnInit(): void {
 
   }
 
   ngAfterViewInit(): void {
     this.productService.getProductDetails(362).subscribe((product) => {
+      this.product = product;
+      [this.selectedTechnique] = product.data.techniques.map((technique) => technique.key);
+      this.techniques = product.data.techniques.map((technique) => technique.display_name);
+      this.placements = product.data.placements.filter(
+        (placement) => placement.technique === this.selectedTechnique
+      ).map((placement: Placement) => this.formatPlacement(placement.placement));
+      [this.selectedColor] = product.data.colors.map((color) => color.name);
       this.colors = product.data.colors.map((color) => color.value);
+      [this.selectedSizeVolume] = product.data.sizes;
       this.sizes_volumes = product.data.sizes;
-      this.techniques = product.data.techniques.map(
-        (technique) => technique.display_name
-      );
-      this.views = new Map();
-
-      product.data.placements.forEach((placement) => {
-        if (this.views.has(placement.technique)) {
-          this.views.get(placement.technique)!.push(placement.placement);
-        } else {
-          this.views.set(placement.technique, [placement.placement]);
-        }
-      });
       this.change.detectChanges();
     });
   }
@@ -53,5 +54,14 @@ export class DesignComponent implements OnInit, AfterViewInit {
 
   onStyleClick(_t1: string) {
     throw new Error('Method not implemented.');
+  }
+
+  formatPlacement(placement: string): string {
+
+    // Replace underscore with space,Split the string into words, capitalize each word, and join them back
+    return placement.replace(/_/g, ' ').split(' ')
+                          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                          .join(' ');
+
   }
 }
