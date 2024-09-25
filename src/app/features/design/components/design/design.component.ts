@@ -2,7 +2,6 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, I
 
 import { ProductService } from '../../services/product.service';
 import { Placement, Product } from '../../models/product.';
-import { first } from 'rxjs';
 
 @Component({
   selector: 'app-design',
