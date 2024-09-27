@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-placement',
@@ -9,5 +9,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 export class PlacementComponent { 
   @Input() placements!: string[];
+  @Output() placementClick = new EventEmitter<string>();
+
+  onPlacementClick(placement: string): void {
+    this.placementClick.emit(placement);
+  }
 
 }

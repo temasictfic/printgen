@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-product-area',
@@ -7,4 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './product-area.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductAreaComponent { }
+export class ProductAreaComponent { 
+  @Input() productImageUrl!: string; 
+}

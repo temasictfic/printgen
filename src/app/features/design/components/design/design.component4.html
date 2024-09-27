@@ -8,7 +8,7 @@
                 
                 <!-- Print Type -->
                 <h3 class="font-medium mb-2">Print Type</h3>
-                <app-technique [techniques]="techniques"></app-technique>
+                <app-technique [techniques]="techniques" (techniqueClick)="onTechniqueClick($event)"></app-technique>
                 
                 <!-- Size Selection -->
                 <h3 class="font-medium mb-2">Size</h3>
@@ -29,10 +29,10 @@
             <!-- Main Content -->
             <div class="flex-1 bg-white p-4 rounded-lg shadow-sm">
                 <!-- Toolbar -->
-                <app-placement [placements]="placements"></app-placement>
+                <app-placement [placements]="rawPlacements" (placementClick)="onPlacementClick($event)"></app-placement>
 
                 <!-- Product Preview -->
-                <app-product-area></app-product-area>
+                <app-product-area [productImageUrl]="selectedPlacementImageUrl"></app-product-area>
             </div>
         </div>
     </div>

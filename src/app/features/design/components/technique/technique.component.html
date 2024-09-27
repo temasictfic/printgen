@@ -1,6 +1,6 @@
 <div class="flex gap-2 mb-4">
   @for (technique of techniques; track $index) {
 
-  <app-button type="button" class="btn btn-outline">{{ technique }}</app-button>
+  <app-button type="button" class="btn btn-outline" (click)="onTechniqueClick(technique)">{{ technique }}</app-button>
   }
 </div>
