@@ -66,7 +66,7 @@ export class DesignComponent implements OnInit, AfterViewInit {
   onTechniqueClick(technique: string): void {
     this.selectedTechnique = technique;
     this.rawPlacements = this.product.data.placements.filter(
-      (placement) => placement.technique === technique
+      (placement) => placement.technique === technique && placement.placement !== 'mockup'
     ).map((placement: Placement) => placement.placement);
     const [firstPlacement] = this.rawPlacements;
     this.onPlacementClick(firstPlacement);
