@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Image } from '../../models/t-shirt';
 
 @Component({
   selector: 'app-product-area',
@@ -9,4 +10,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 })
 export class ProductAreaComponent { 
   @Input() productImageUrl!: string; 
+  @Input() productBackgroundImgUrl!: string | null;
+  @Input() productBackgroundColor!: string | null;
+  @Input() color!: string;
 }

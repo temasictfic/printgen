@@ -17,7 +17,7 @@ export interface TShirt {
     placement: string
     image_url: string
     background_color: string
-    background_image: any
+    background_image: string
   }
   
   export interface Paging {

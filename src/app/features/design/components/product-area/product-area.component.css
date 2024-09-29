@@ -1,3 +1,55 @@
 :host {
   display: block;
 }
+
+/* .img-1 {
+  z-index: 1;
+}
+
+.color {
+  position: absolute;
+  top: 10;
+  bottom: 10;
+  width: 100%;
+  height: 75%;
+  z-index: 0;
+  mix-blend-mode: multiply;
+} */
+
+.product-image-container {
+  position: relative;
+  width: 100%;
+  height: 75%;
+}
+
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 3;
+}
+
+.color-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+.texture-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply, plus-lighter;
+  z-index: 2;
+}

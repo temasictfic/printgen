@@ -12,6 +12,7 @@ import { PlacementComponent } from './components/placement/placement.component';
 import { PromptComponent } from './components/prompt/prompt.component';
 import { ProductAreaComponent } from './components/product-area/product-area.component';
 import { TechniqueComponent } from './components/technique/technique.component';
+import { FormatPlacementPipe } from './pipe/format-placement.pipe';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
     PlacementComponent,
     PromptComponent,
     ButtonComponent,
+    FormatPlacementPipe,
   ],
   imports: [CommonModule, SharedModule, RouterModule.forChild(routes)],
   exports: [],

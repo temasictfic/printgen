@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Color } from '../../models/product';
 
 @Component({
   selector: 'app-color',
@@ -8,6 +9,11 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColorComponent { 
-  @Input() colors!: string[];
+  @Input() colors!: Color[];
+  @Output() colorClick = new EventEmitter<Color>();
+
+  onColorClick(color: Color): void {
+    this.colorClick.emit(color);
+  }
 
 }
