@@ -1,5 +1,5 @@
 # Frontprint
-Backend repo here [link](github.com/cantaskin/PrintGen)
+Backend repo here [link](https://github.com/cantaskin/PrintGen)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
 
